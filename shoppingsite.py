@@ -17,7 +17,7 @@ app = Flask(__name__)
 
 # Need to use Flask sessioning features
 
-app.secret_key = 'this-should-be-something-unguessable'
+app.secret_key = 'rubaandstefaniearereallyawesomeatflasktodayandallthetime'
 
 # Normally, if you refer to an undefined variable in a Jinja template,
 # Jinja silently ignores this. This makes debugging difficult, so we'll
@@ -70,7 +70,7 @@ def shopping_cart():
     #   - keep track of the total amt ordered for a melon-type
     #   - keep track of the total amt of the entire order
     # - hand to the template the total order cost and the list of melon types
-
+    print session
     return render_template("cart.html")
 
 
@@ -87,26 +87,35 @@ def add_to_cart(id):
     # The logic here should be something like:
     #
     # - add the id of the melon they bought to the cart in the session
-    shopping_list = []
-    melons_dict={}
+    shopping_list_cart = []
 
-    melons_dict = {melon_id : 0}
     # When a user clicks on the add to cart from the melon id's page, 
     # if the melon id is not in the melon dictionary of things in the cart
     # update the value for that melon id by 1.
 
     # If the melon id IS in the dictionary, increase the value for that
     # melon id by 1. 
-    # for x in id:
-        if id in melons_dict.keys():
-            melons_dict[id] = melons_dict[id] + 1
-        else:
-            melons_dict[id] = 1
+    id = int(id)
+
+    shopping_list_cart.append(id)
+
+    print shopping_list_cart
+
+    flash("You have added your melons!")
+    return render_template("cart.html")
 
 
+    # if shopping_list_cart == []:
+    #     shopping_list_cart.append(id)
+    #     session[id] = 1
 
+    #     print session[id]
+    #     print shopping_list_cart
 
-    return "Oops! This needs to be implemented!"
+    #     flash("You have added your melons!")
+
+    #     return render_template("cart.html")
+
 
 
 @app.route("/login", methods=["GET"])
